@@ -271,4 +271,9 @@ handler = app
 
 if __name__ == "__main__":
     import os
-    web.run_app(app, host="genius-itxo.onrender.com", port=int(os.environ.get("PORT", 5000)))
+    if os.environ.get("LOCAL") == "1":
+        asyncio.run(dp.start_polling(bot))
+    else:
+        port = int(os.environ.get("PORT", 5000))
+        logging.info(f"Starting web app on host='0.0.0.0', port={port}")
+        web.run_app(app, host="0.0.0.0", port=port)
