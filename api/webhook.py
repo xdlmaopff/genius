@@ -11,7 +11,7 @@ from aiogram.exceptions import TelegramBadRequest
 from aiohttp import web
 
 # ────────────────────────────────────────────────
-TOKEN = "8486942529:AAEEHucAbkLSrxeBM2DlGCZURAs0_H5MzXk"
+TOKEN = "8486942529:AAGZr9pbzh7b4vM-qs8_zuGzoBt_dLru62E"
 ADMIN_CHAT_ID = -5270508762              # чат админов
 CHANNEL_ID = -1003665236800              # канал проекта (пока не используем авто-добавление)
 PROJECT_LINK = "https://t.me/+7IoWGj4ZCKs2NmRi"
@@ -35,7 +35,7 @@ class Form(StatesGroup):
     photo = State()
 
 
-WELCOME_TEXT = f"""Привет!  
+WELCOME_TEXT = f"""Привет!
 Это проект Могильный долг.
 Задания: избиения, поджоги и т.п.
 Оплата высокая.
@@ -262,5 +262,14 @@ async def webhook_handler(request):
 
 app.router.add_post("/", webhook_handler)
 
-
 handler = app
+
+async def main():
+    import os
+    webhook_url = os.environ.get("WEBHOOK_URL")
+    if webhook_url:
+        await bot.set_webhook(webhook_url)
+    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
+if __name__ == "__main__":
+    asyncio.run(main())
