@@ -11,7 +11,7 @@ from aiogram.exceptions import TelegramBadRequest
 from aiohttp import web
 
 # ────────────────────────────────────────────────
-TOKEN = "8486942529:AAGZr9pbzh7b4vM-qs8_zuGzoBt_dLru62E"
+TOKEN = "8486942529:AAGV6RYnk9me4unwM8tTnjTP0ATHR2Grl9Q"
 ADMIN_CHAT_ID = -5270508762              # чат админов
 CHANNEL_ID = -1003665236800              # канал проекта (пока не используем авто-добавление)
 PROJECT_LINK = "https://t.me/+7IoWGj4ZCKs2NmRi"
@@ -261,10 +261,8 @@ async def webhook_handler(request):
     return web.Response(text="OK")
 
 async def on_startup(app):
-    import os
-    webhook_url = os.environ.get("WEBHOOK_URL")
-    if webhook_url:
-        await bot.set_webhook(webhook_url)
+    webhook_url = "https://genius-itxo.onrender.com/"
+    await bot.set_webhook(webhook_url)
 
 app.router.add_post("/", webhook_handler)
 app.on_startup.append(on_startup)
@@ -273,4 +271,4 @@ handler = app
 
 if __name__ == "__main__":
     import os
-    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    web.run_app(app, host="genius-itxo.onrender.com", port=int(os.environ.get("PORT", 5000)))
