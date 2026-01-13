@@ -36,7 +36,7 @@ class Form(StatesGroup):
 
 
 WELCOME_TEXT = f"""Привет!  
-Это проект Могильное дело.
+Это проект Могильный долг.
 Задания: избиения, поджоги и т.п.
 Оплата высокая.
 
@@ -261,5 +261,6 @@ async def webhook_handler(request):
     return web.Response(text="OK")
 
 app.router.add_post("/", webhook_handler)
+
 
 handler = app
