@@ -260,16 +260,17 @@ async def webhook_handler(request):
     await dp.feed_update(bot, update)
     return web.Response(text="OK")
 
-app.router.add_post("/", webhook_handler)
-
-handler = app
-
-async def main():
+async def on_startup(app):
     import os
     webhook_url = os.environ.get("WEBHOOK_URL")
     if webhook_url:
         await bot.set_webhook(webhook_url)
-    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
+app.router.add_post("/", webhook_handler)
+app.on_startup.append(on_startup)
+
+handler = app
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    import os
+    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
